@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<title>Фасоль өсімдігіне металл әсері</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #eef2f7, #ffffff);
+        color: #222;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 25px 0;
+        font-size: 36px;
+        font-weight: 800;
+        background: #ffffffaa;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 35px;
+    }
+
+    .container {
+        display: flex;
+        max-width: 1300px;
+        margin: auto;
+        gap: 35px;
+        padding: 20px;
+    }
+
+    .panel {
+        background: #fff;
+        border-radius: 18px;
+        padding: 25px;
+        flex: 1;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .panel:hover {
+        transform: translateY(-5px);
+    }
+
+    .left-panel {
+        max-width: 380px;
+    }
+
+    label {
+        font-size: 18px;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+        margin-top: 20px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid #bbb;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 6px rgba(59,130,246,0.5);
+    }
+
+    button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 14px;
+        font-size: 20px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        transform: scale(1.03);
+    }
+
+    .right-panel {
+        text-align: center;
+    }
+
+    .plant-img {
+        width: 70%;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .plant-img.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .description {
+        padding: 20px;
+        font-size: 18px;
+        background: #fafafa;
+        border-radius: 14px;
+        border: 1px solid #e5e5e5;
+        line-height: 1.6;
+        max-width: 80%;
+        margin: auto;
+    }
+     /* Толық экран фон */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+    }
+
+    body {
+        /* Градиенттік фон */
+        background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+        background-size: 400% 400%;
+
+        /* Анимация */
+        animation: gradientBG 15s ease infinite;
+    }
+
+    /* Фон анимациясының кілт кадрлары */
+    @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+
+    /* Контентты орталыққа шығару мысалы */
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 48px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    p {
+        font-size: 20px;
+        text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+</style>
+
+
+
+</head>
+<body>
+
+<h1>Фасоль өсімдігіне ауыр металдардың әсерін бақылау</h1>
+
+<div class="container">
+
+    <!-- Сол жақ панель -->
+    <div class="panel left-panel">
+        <h2 style="margin-top:0; font-size:26px; font-weight:700;">Параметрлерді таңдау</h2>
+
+        <label>Металл түрі</label>
+        <select id="metalSelect">
+            <option value="">Металл таңдаңыз</option>
+            <option value="Cu">Мыс (Cu)</option>
+            <option value="Zn">Мырыш (Zn)</option>
+            <option value="Cd">Кадмий (Cd)</option>
+        </select>
+
+        <label>Концентрация</label>
+        <select id="doseSelect">
+            <option value="">Концентрация таңдаңыз</option>
+            <option value="low">0.001 мг/мл — төмен</option>
+            <option value="high">0.01 мг/мл — жоғары</option>
+        </select>
+
+        <button onclick="showResult()">Нәтижені көрсету</button>
+    </div>
+
+    <!-- Оң жақ панель -->
+    <div class="panel right-panel">
+        <h2 style="font-size:28px; font-weight:700;">Өсімдіктің қазіргі жағдайы</h2>
+
+        <img id="plantImage" class="plant-img show" src="https://us-east-1-shared-usea1-02.graphassets.com/A2lCPH6tTelhrsostvMQpz/auto_image/resize=fit:max,width:3840/quality=value:75/cm98ltrma126107lm6ukyrxgo" alt="Сау фасоль">
+
+        <div id="plantDesc" class="description">
+            Бұл — сау фасоль өсімдігі. Сол жақтан металл мен концентрацияны таңдаңыз.
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const data = {
+        "Cu_low": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m1.jpg",
+            text: "Мыс (0.001 мг/мл): Тамырда жеңіл қоңырқай түс, жапырақ аздап бозғылт, өсу баяу."
+        },
+        "Cu_high": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m2.jpg",
+            text: "Мыс (0.01 мг/мл): Тамыр қараю, хлороз, некроз дақтары, фотосинтез күрт төмендейді."
+        },
+
+        "Zn_low": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m3.jpg",
+            text: "Мырыш (0.001 мг/мл): Тамыр аздап тежеледі, жапырақта сарғыш дақтар байқалады."
+        },
+        "Zn_high": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m4.jpg",
+            text: "Мырыш (0.01 мг/мл): Интервенозды хлороз, тамыр қысқа, өсу айтарлықтай әлсірейді."
+        },
+
+        "Cd_low": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m5.jpg",
+            text: "Кадмий (0.001 мг/мл): Күшті тежелу, жапырақта хлороз ерте қалыптасады."
+        },
+        "Cd_high": {
+            img: "https://uploads.onecompiler.io/445mys8gu/445myb6qf/m6.jpg",
+            text: "Кадмий (0.01 мг/мл): Тамыр некрозы, толық зақымдану, фотосинтез 60% төмен — ең ауыр әсер."
+        }
+    };
+
+    function showResult() {
+        let metal = document.getElementById("metalSelect").value;
+        let dose = document.getElementById("doseSelect").value;
+
+        if (!metal || !dose) {
+            alert("Алдымен металл мен концентрацияны таңдаңыз!");
+            return;
+        }
+
+        let key = metal + "_" + dose;
+        let item = data[key];
+
+        let img = document.getElementById("plantImage");
+        let desc = document.getElementById("plantDesc");
+
+        // Көрсету анимациясы
+        img.classList.remove("show");
+
+        setTimeout(() => {
+            img.src = item.img;
+            img.classList.add("show");
+        }, 300);
+
+        desc.innerText = item.text;
+    }
+</script>
+
+</body>
+</html>
